@@ -1,428 +1,451 @@
 import Link from "next/link";
+import Image from "next/image";
 
-// 11 อาการของโรคต่อมลูกหมากโต
+// รูปภาพจากเว็บอ้างอิง
+const images = {
+  hero: "https://drsuntchai.com/wp-content/uploads/2025/01/treat-benign-prostatic-hyperplasia.webp",
+  prostate: "https://drsuntchai.com/wp-content/uploads/2024/12/Benign-Prostatic-Hyperplasia-02.webp",
+  symptoms: "https://drsuntchai.com/wp-content/uploads/2024/12/Benign-Prostatic-Hyperplasia-04.webp",
+  treatment: "https://drsuntchai.com/wp-content/uploads/2025/01/rezum-01.webp",
+  product: "https://res.cloudinary.com/demo/image/upload/v1/samples/food/spices",
+};
+
+// อาการหลัก - ลดจำนวนเหลือ 6 ข้อ แสดงชัดเจน
 const symptoms = [
-  { num: 1, text: "ปัสสาวะบ่อย ตื่นกลางคืน" },
-  { num: 2, text: "ปัสสาวะไม่พุ่ง ติดๆขัดๆ" },
-  { num: 3, text: "กลั้นปัสสาวะไม่อยู่" },
-  { num: 4, text: "ปัสสาวะไม่สุด" },
-  { num: 5, text: "ปัสสาวะไหลๆ หยุดๆ" },
-  { num: 6, text: "ต้องเบ่งช่วยเวลาปัสสาวะ" },
-  { num: 7, text: "ปัสสาวะกะปริบกะปรอย" },
-  { num: 8, text: "ปวดแสบ ปวดท้องน้อย" },
-  { num: 9, text: "ปัสสาวะเป็นเลือด" },
-  { num: 10, text: "นกเขาไม่ขัน" },
-  { num: 11, text: "ค่า PSA สูง" },
+  { icon: "🚽", text: "ปัสสาวะบ่อย ตื่นกลางคืน" },
+  { icon: "💧", text: "ปัสสาวะไม่พุ่ง ไหลช้า" },
+  { icon: "😣", text: "ต้องเบ่ง ออกยาก" },
+  { icon: "🔁", text: "ไหลๆ หยุดๆ" },
+  { icon: "⚠️", text: "กลั้นไม่อยู่" },
+  { icon: "🩸", text: "ปัสสาวะเป็นเลือด" },
 ];
 
-// 10 ประโยชน์
+// ประโยชน์ - ลดเหลือ 6 ข้อหลัก
 const benefits = [
-  "ลดอาการอักเสบ ต่อมลูกหมาก",
-  "แก้อาการปัสสาวะกะปริบกะปรอย",
-  "แก้อาการปัสสาวะเป็นเลือด",
-  "แก้อาการปวดขณะถ่ายปัสสาวะ",
-  "แก้อาการปัสสาวะไม่สุด",
-  "แก้อาการกลั้นปัสสาวะไม่อยู่",
-  "ป้องกันการอักเสบของต่อมลูกหมาก",
-  "ป้องกันกระเพาะปัสสาวะอักเสบ",
-  "ป้องกันไตเสื่อมและไตวาย",
-  "คืนความเป็นชายอย่างเต็มตัว",
+  { icon: "✅", text: "ลดอาการอักเสบ" },
+  { icon: "✅", text: "ปัสสาวะคล่องขึ้น" },
+  { icon: "✅", text: "ไม่ต้องตื่นกลางคืน" },
+  { icon: "✅", text: "หายปวดแสบ" },
+  { icon: "✅", text: "ไม่ต้องผ่าตัด" },
+  { icon: "✅", text: "สมุนไพรปลอดภัย" },
 ];
 
-// ส่วนผสมสำคัญ
+// ส่วนผสม - แสดงเป็นรูปภาพ
 const ingredients = [
-  { name: "ไลโคปีน (Lycopene)", desc: "จากมะเขือเทศ ช่วยลดอาการต่อมลูกหมากโต" },
-  { name: "ซิงค์ออกไซด์", desc: "สังเคราะห์ฮอร์โมนเพศ" },
-  { name: "ซิงค์คลอไรด์", desc: "ช่วยให้ต่อมลูกหมากทำงานปกติ" },
-  { name: "วิตามิน B1 B2 B3", desc: "บำรุงต่อมลูกหมาก" },
-];
-
-// FAQ
-const faqs = [
-  {
-    q: "Tomazing Plus2 คืออะไร?",
-    a: "ผลิตภัณฑ์เสริมอาหารจากสารสกัดไลโคปีน (Lycopene) จากมะเขือเทศ ที่ผ่านการวิจัยโดย ดร.ณสพน โพธิ์วิจิตร และได้รับรางวัลระดับโลก 9 รางวัล",
-  },
-  {
-    q: "ทานนานแค่ไหนถึงจะเห็นผล?",
-    a: "ทานเพียง 3 วันอาการดีขึ้น ถ้าทานต่อเนื่อง 3-4 เดือน อาการจะหายไป",
-  },
-  {
-    q: "มีผลข้างเคียงหรือไม่?",
-    a: "ไม่มีผลข้างเคียง เพราะทำจากสมุนไพรธรรมชาติ 100% ปลอดภัยสำหรับทุกคน",
-  },
-  {
-    q: "สั่งซื้อได้อย่างไร?",
-    a: "ติดต่อทาง LINE หรือโทร 063-629-4452",
-  },
+  { name: "ไลโคปีน", desc: "จากมะเขือเทศ", emoji: "🍅" },
+  { name: "ซิงค์", desc: "บำรุงต่อมลูกหมาก", emoji: "💊" },
+  { name: "วิตามิน B", desc: "ฟื้นฟูร่างกาย", emoji: "🌿" },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Mobile-First Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <main className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="nav-fixed">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <Link href="/" className="text-lg sm:text-xl font-bold gradient-text">
+          <Link href="/" className="text-xl font-bold gradient-text">
             Tomazing Plus2
           </Link>
-          <a
-            href="https://lin.ee/riWkqmk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-4 rounded-full transition"
-          >
-            สั่งซื้อ
+          <a href="tel:0636294452" className="text-lg font-semibold text-gray-700">
+            📞 063-629-4452
           </a>
         </div>
       </nav>
 
-      {/* Hero Section - Mobile First */}
-      <section className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12">
+      {/* Hero Section - Image Focused */}
+      <section className="pt-20 pb-8 px-4">
         <div className="container mx-auto max-w-4xl">
-          {/* Badge */}
-          <div className="text-center mb-6">
-            <span className="inline-block bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-xs sm:text-sm">
-              🏆 งานวิจัย 9 รางวัลระดับโลก
-            </span>
+          {/* Main Image */}
+          <div className="image-container mb-6">
+            <Image
+              src={images.hero}
+              alt="วิธีรักษาต่อมลูกหมากโต"
+              width={800}
+              height={450}
+              className="w-full h-auto"
+              priority
+            />
           </div>
 
-          {/* Main Headline - Mobile Optimized */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-4 leading-tight">
-            เผยข้อมูลสุดยอดงานวิจัย
+          {/* Simple Headline */}
+          <h1 className="text-center mb-4">
+            <span className="gradient-text">รักษาต่อมลูกหมากโต</span>
             <br />
-            <span className="gradient-text">วิธีหายจากต่อมลูกหมากโต!</span>
+            หายได้ ไม่ต้องผ่าตัด!
           </h1>
 
-          <p className="text-center text-gray-300 text-sm sm:text-base mb-6 max-w-xl mx-auto">
-            อ่านเรื่องราวต่อไปนี้แล้วท่านจะรู้ว่า &quot;โรคต่อมลูกหมากโต&quot;
-            ปัสสาวะบ่อย ไม่สุด ติดๆขัดๆ เป็นเลือด <strong className="text-white">หายได้อย่างไร</strong>
+          <p className="text-center text-gray-600 text-lg mb-6">
+            ผลิตภัณฑ์จากงานวิจัย <strong>9 รางวัลระดับโลก</strong>
           </p>
 
-          {/* CTA Buttons - Stack on Mobile */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+          {/* Big CTA */}
+          <div className="text-center mb-8">
             <a
               href="https://lin.ee/riWkqmk"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary text-center animate-pulse-glow"
+              className="btn-line animate-pulse-glow"
             >
-              🛒 สั่งซื้อตอนนี้
-            </a>
-            <a href="#symptoms" className="btn-secondary text-center">
-              ดูอาการที่ควรระวัง
+              💬 สั่งซื้อ / ปรึกษาฟรี
             </a>
           </div>
 
-          {/* Quick Stats - Mobile Grid */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
-            <div className="glass rounded-xl p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold gradient-text">3 วัน</div>
-              <div className="text-xs sm:text-sm text-gray-400">เห็นผลลัพธ์</div>
+          {/* Stats - Large Visual */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="stat-card">
+              <div className="stat-number">3 วัน</div>
+              <div className="stat-label">เห็นผล</div>
             </div>
-            <div className="glass rounded-xl p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold gradient-text">40,000+</div>
-              <div className="text-xs sm:text-sm text-gray-400">คนหายแล้ว</div>
+            <div className="stat-card">
+              <div className="stat-number">4 หมื่น</div>
+              <div className="stat-label">คนหายแล้ว</div>
             </div>
-            <div className="glass rounded-xl p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold gradient-text">99%</div>
-              <div className="text-xs sm:text-sm text-gray-400">ซื้อซ้ำ</div>
+            <div className="stat-card">
+              <div className="stat-number">99%</div>
+              <div className="stat-label">ซื้อซ้ำ</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Symptoms Section - Mobile Optimized */}
-      <section id="symptoms" className="py-10 px-4 bg-gradient-to-b from-transparent to-red-950/20">
+      {/* What is BPH - Visual */}
+      <section className="py-10 px-4 section-light">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-2">
-            11 <span className="gradient-text">อาการของโรคต่อมลูกหมากโต</span>
+          <h2 className="text-center mb-6">
+            <span className="gradient-text">ต่อมลูกหมากโต</span> คืออะไร?
           </h2>
-          <p className="text-gray-400 text-sm text-center mb-6">
-            คุณมีอาการเหล่านี้หรือไม่? ถ้ามี รีบดูแลตัวเอง
+
+          {/* Image */}
+          <div className="image-container mb-6">
+            <Image
+              src={images.prostate}
+              alt="ต่อมลูกหมากโตคืออะไร"
+              width={800}
+              height={450}
+              className="w-full h-auto"
+            />
+          </div>
+
+          <div className="card">
+            <p className="text-lg text-gray-700 leading-relaxed">
+              ต่อมลูกหมาก<strong>โตจนไปกดท่อปัสสาวะ</strong> ทำให้ปัสสาวะลำบาก
+              เหมือนท่อน้ำตีบ น้ำจึงไหลได้ไม่ดี
+            </p>
+            <p className="text-lg text-gray-700 mt-4">
+              <span className="text-success font-bold">ข่าวดี:</span> โรคนี้ไม่ใช่มะเร็ง และ<strong>รักษาหายได้</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Symptoms - Visual Grid */}
+      <section className="py-10 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-center mb-2">
+            คุณมี<span className="gradient-text">อาการเหล่านี้</span>ไหม?
+          </h2>
+          <p className="text-center text-gray-500 mb-6">
+            ถ้ามี 2-3 ข้อขึ้นไป ควรรีบดูแลตัวเอง
           </p>
 
-          {/* Symptoms List - 2 columns on mobile */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-6">
-            {symptoms.map((symptom) => (
-              <div
-                key={symptom.num}
-                className="glass rounded-lg p-3 flex items-center gap-2"
-              >
-                <span className="flex-shrink-0 w-6 h-6 bg-red-500/30 text-red-400 rounded-full flex items-center justify-center text-xs font-bold">
-                  {symptom.num}
-                </span>
-                <span className="text-xs sm:text-sm">{symptom.text}</span>
+          {/* Symptoms Image */}
+          <div className="image-container mb-6">
+            <Image
+              src={images.symptoms}
+              alt="อาการต่อมลูกหมากโต"
+              width={800}
+              height={450}
+              className="w-full h-auto"
+            />
+          </div>
+
+          {/* Symptoms Grid - Large Icons */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {symptoms.map((s, index) => (
+              <div key={index} className="symptom-badge">
+                <span className="text-3xl">{s.icon}</span>
+                <span className="font-semibold">{s.text}</span>
               </div>
             ))}
           </div>
 
           {/* Warning */}
-          <div className="card border-yellow-500/50 bg-yellow-500/10 text-center">
-            <p className="text-sm sm:text-base">
-              ⚠️ โรคต่อมลูกหมากโตอาจนำไปสู่{" "}
-              <strong className="text-yellow-400">มะเร็งต่อมลูกหมาก</strong>,{" "}
-              ไตเสื่อม, กระเพาะปัสสาวะเสื่อม
+          <div className="warning-box mt-6 text-center">
+            <p className="text-lg font-semibold">
+              ⚠️ ถ้าปล่อยไว้ อาจนำไปสู่ <strong>มะเร็ง</strong> หรือ <strong>ไตเสื่อม</strong>
             </p>
           </div>
         </div>
       </section>
 
-      {/* Story Section - Mobile Optimized */}
-      <section className="py-10 px-4">
-        <div className="container mx-auto max-w-3xl">
-          <div className="card">
-            <h2 className="text-lg sm:text-xl font-bold mb-4 gradient-text">
-              ประสบการณ์จริง: ลุงผมเป็นมา 7 ปี
-            </h2>
-            <div className="text-sm sm:text-base text-gray-300 space-y-4">
-              <p>
-                สวัสดีครับ ผมชื่อเบิร์ด เป็นหลานคุณลุงที่เป็นโรคต่อมลูกหมากโต
-                ปัจจุบันลุง<strong className="text-green-400">ไม่มีอาการแล้ว หายดีเป็นปกติ</strong>
-              </p>
-              <p>
-                ลุงทนทานยาเดิมๆมา 7 ปี อาการเหมือนจะดีขึ้นแต่ก็ไม่เคยหายขาด
-                จนผมไปเจอคลิปของ <strong className="text-white">ดร.ณสพน โพธิ์วิจิตร</strong>{" "}
-                ที่วิจัยสารสกัดไลโคปีนจากมะเขือเทศ
-              </p>
-              <p className="text-lg sm:text-xl font-bold text-center py-4 gradient-text">
-                ทานได้เพียง 3 วัน อาการดีขึ้น!
-              </p>
-              <p>
-                หลังจากทาน TOMAZING PLUS + ARSHITHONG GOLD ต่อเนื่อง 3-4 เดือน
-                <strong className="text-green-400"> อาการที่แสนทรมานไม่มีมาอีกเลย</strong>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Product Section - Mobile First */}
-      <section className="py-10 px-4 bg-gradient-to-b from-transparent via-red-950/10 to-transparent">
+      {/* Product Section - Big Images */}
+      <section className="py-10 px-4 section-highlight">
         <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-8">
-            <span className="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-xs mb-4">
-              อัพเกรดเข้มข้น 2 เท่า
+          <div className="text-center mb-6">
+            <span className="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold mb-4">
+              🏆 9 รางวัลระดับโลก
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2">
-              TOMAZING PLUS2
-            </h2>
-            <p className="text-gray-400 text-sm">
-              ผลิตภัณฑ์จากงานวิจัย ดร.ณสพน โพธิ์วิจิตร
-            </p>
+            <h2 className="mb-2">TOMAZING PLUS2</h2>
+            <p className="text-xl text-gray-600">อัพเกรด เข้มข้น 2 เท่า!</p>
           </div>
 
           {/* Product Visual */}
           <div className="flex justify-center mb-8">
-            <div className="relative w-40 h-40 sm:w-56 sm:h-56">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-              <div className="relative w-full h-full glass rounded-full flex items-center justify-center animate-float">
-                <span className="text-6xl sm:text-8xl">🍅</span>
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+              <div className="relative w-full h-full bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-red-100 animate-float">
+                <span className="text-7xl sm:text-9xl">🍅</span>
               </div>
             </div>
           </div>
 
-          {/* Ingredients - Mobile Grid */}
-          <div className="grid grid-cols-2 gap-3 mb-8">
-            {ingredients.map((ing, index) => (
-              <div key={index} className="card text-center p-4">
-                <div className="text-2xl mb-2">💊</div>
-                <p className="font-semibold text-sm sm:text-base">{ing.name}</p>
-                <p className="text-xs text-gray-400">{ing.desc}</p>
+          {/* Ingredients - Visual Cards */}
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            {ingredients.map((ing, i) => (
+              <div key={i} className="card text-center">
+                <div className="text-4xl mb-2">{ing.emoji}</div>
+                <p className="font-bold text-lg">{ing.name}</p>
+                <p className="text-gray-500 text-sm">{ing.desc}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-center text-green-400 text-sm sm:text-base mb-4">
-            ✅ ส่วนผสมทุกอย่างเป็นสมุนไพร ปลอดภัย 100%
+          <p className="text-center text-success text-xl font-bold">
+            ✅ สมุนไพร 100% ปลอดภัย ไม่มีผลข้างเคียง
           </p>
         </div>
       </section>
 
-      {/* Benefits Section - Mobile Optimized */}
+      {/* Benefits - Large Visual */}
       <section className="py-10 px-4">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-6">
-            10 <span className="gradient-text">ประโยชน์</span>ที่คุณจะได้รับ
+          <h2 className="text-center mb-6">
+            <span className="gradient-text">ประโยชน์</span>ที่ได้รับ
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 glass rounded-lg p-3 sm:p-4"
-              >
-                <span className="flex-shrink-0 w-8 h-8 bg-green-500/30 text-green-400 rounded-full flex items-center justify-center">
-                  ✓
-                </span>
-                <span className="text-sm sm:text-base">{benefit}</span>
+          <div className="grid grid-cols-2 gap-3">
+            {benefits.map((b, i) => (
+              <div key={i} className="benefit-item">
+                <span className="benefit-check">{b.icon}</span>
+                <span className="text-lg font-semibold">{b.text}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Social Proof - Mobile First */}
-      <section className="py-10 px-4 bg-gradient-to-b from-transparent to-gray-900/50">
+      {/* Testimonial - Big Photo */}
+      <section className="py-10 px-4 section-light">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-2">
-            พิสูจน์แล้วกว่า <span className="gradient-text">40,000 คน</span>
+          <h2 className="text-center mb-6">
+            เสียงจาก<span className="gradient-text">ลูกค้าจริง</span>
           </h2>
-          <p className="text-gray-400 text-sm text-center mb-6">
-            ลูกค้า 99% กลับมาซื้อซ้ำ
-          </p>
 
-          {/* Stats Bar */}
-          <div className="card text-center mb-6 bg-gradient-to-r from-red-900/50 to-orange-900/50">
-            <p className="text-sm text-gray-400">ยอดสั่งซื้อรวมแล้ว</p>
-            <p className="text-3xl sm:text-4xl font-bold gradient-text">624,562 กล่อง</p>
+          <div className="card bg-white">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center text-4xl">
+                  👴
+                </div>
+              </div>
+              <div>
+                <p className="text-xl leading-relaxed mb-4">
+                  &quot;ทนทานมา <strong>7 ปี</strong> พอทาน TOMAZING PLUS
+                  แค่ <span className="gradient-text font-bold">3 วัน อาการดีขึ้น!</span>
+                  เดี๋ยวนี้ไม่ต้องตื่นกลางคืนแล้ว&quot;
+                </p>
+                <p className="text-gray-500 font-semibold">— ลุงเบิร์ด อายุ 65 ปี</p>
+              </div>
+            </div>
           </div>
 
-          {/* Key Benefits */}
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="glass rounded-lg p-3">
-              <div className="text-2xl mb-1">💉</div>
-              <p className="text-xs">ไม่ต้องเจ็บตัว</p>
-            </div>
-            <div className="glass rounded-lg p-3">
-              <div className="text-2xl mb-1">💰</div>
-              <p className="text-xs">ไม่ต้องจ่ายแพง</p>
-            </div>
-            <div className="glass rounded-lg p-3">
-              <div className="text-2xl mb-1">🌿</div>
-              <p className="text-xs">ไม่มีผลข้างเคียง</p>
-            </div>
+          {/* Stats */}
+          <div className="card mt-6 text-center bg-gradient-to-r from-red-50 to-orange-50">
+            <p className="text-gray-600 mb-2">ยอดสั่งซื้อรวมแล้ว</p>
+            <p className="text-4xl font-bold gradient-text">624,562 กล่อง</p>
           </div>
         </div>
       </section>
 
-      {/* CTA Section - Mobile Optimized */}
+      {/* Big CTA Section */}
       <section className="py-10 px-4">
         <div className="container mx-auto max-w-lg">
-          <div className="card text-center bg-gradient-to-br from-red-900/50 to-orange-900/50 border-red-500/50">
-            <span className="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-xs mb-4">
-              🔥 โปรโมชั่นพิเศษวันนี้
-            </span>
-            <h2 className="text-xl sm:text-2xl font-bold mb-3">
-              พร้อมหายจากอาการทรมาน?
-            </h2>
-            <p className="text-gray-300 text-sm mb-6">
-              สั่งซื้อตอนนี้ มีผู้เชี่ยวชาญให้คำปรึกษาตลอดการใช้งาน
+          <div className="card text-center bg-gradient-to-br from-red-50 to-orange-50 border-red-200">
+            <div className="icon-circle mx-auto mb-4">
+              📞
+            </div>
+
+            <h2 className="mb-2">พร้อมหายจากอาการ?</h2>
+            <p className="text-gray-600 text-lg mb-6">
+              ทีมผู้เชี่ยวชาญให้คำปรึกษาฟรี!
             </p>
-            <div className="space-y-3">
+
+            <div className="space-y-4">
               <a
                 href="https://lin.ee/riWkqmk"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary w-full text-center block animate-pulse-glow"
+                className="btn-line w-full animate-pulse-glow"
               >
-                💬 ปรึกษาฟรี / สั่งซื้อ
+                💬 LINE สั่งซื้อ / ปรึกษา
               </a>
               <a
                 href="tel:0636294452"
-                className="btn-secondary w-full text-center block"
+                className="btn-secondary w-full block"
               >
                 📞 โทร 063-629-4452
               </a>
             </div>
 
             {/* Guarantees */}
-            <div className="mt-6 pt-4 border-t border-gray-700 grid grid-cols-2 gap-2 text-xs text-gray-400">
-              <div>✅ ของแท้ 100%</div>
-              <div>✅ จัดส่งฟรีทั่วไทย</div>
-              <div>✅ ผู้เชี่ยวชาญให้คำปรึกษา</div>
-              <div>✅ รับประกันสินค้า</div>
+            <div className="mt-6 pt-4 border-t border-gray-200 grid grid-cols-2 gap-2 text-sm">
+              <div className="text-gray-600">✅ ของแท้ 100%</div>
+              <div className="text-gray-600">✅ ส่งฟรีทั่วไทย</div>
+              <div className="text-gray-600">✅ ปรึกษาตลอดการใช้</div>
+              <div className="text-gray-600">✅ รับประกันสินค้า</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section - Mobile First */}
-      <section className="py-10 px-4">
-        <div className="container mx-auto max-w-3xl">
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-6">
-            <span className="gradient-text">คำถาม</span>ที่พบบ่อย
+      {/* Prevention Tips - Visual */}
+      <section className="py-10 px-4 section-light">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-center mb-6">
+            <span className="gradient-text">ป้องกัน</span>ต่อมลูกหมากโต
           </h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <details key={index} className="card group">
-                <summary className="cursor-pointer font-semibold text-sm sm:text-base flex justify-between items-center">
-                  {faq.q}
-                  <span className="text-red-400 group-open:rotate-180 transition-transform ml-2">▼</span>
-                </summary>
-                <p className="mt-3 text-sm text-gray-300 leading-relaxed">{faq.a}</p>
-              </details>
-            ))}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Avoid */}
+            <div className="card border-red-200">
+              <h3 className="text-red-600 mb-4 flex items-center gap-2">
+                <span className="text-2xl">❌</span> หลีกเลี่ยง
+              </h3>
+              <ul className="space-y-3 text-lg">
+                <li className="flex items-center gap-3">
+                  <span className="text-2xl">🥩</span>
+                  <span>เนื้อแดง</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-2xl">🧈</span>
+                  <span>ไขมันสูง เนย ชีส</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-2xl">🍺</span>
+                  <span>แอลกอฮอล์</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Recommended */}
+            <div className="card border-green-200">
+              <h3 className="text-green-600 mb-4 flex items-center gap-2">
+                <span className="text-2xl">✅</span> แนะนำ
+              </h3>
+              <ul className="space-y-3 text-lg">
+                <li className="flex items-center gap-3">
+                  <span className="text-2xl">🥬</span>
+                  <span>ผักผลไม้กากใยสูง</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-2xl">🍅</span>
+                  <span>มะเขือเทศ (ไลโคปีน)</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="text-2xl">🫘</span>
+                  <span>ถั่วเหลือง เต้าหู้</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Blog Section */}
-      <section className="py-10 px-4 bg-gradient-to-b from-transparent to-gray-900/50">
+      {/* FAQ - Simple */}
+      <section className="py-10 px-4">
+        <div className="container mx-auto max-w-3xl">
+          <h2 className="text-center mb-6">
+            <span className="gradient-text">คำถาม</span>ที่พบบ่อย
+          </h2>
+
+          <div className="space-y-3">
+            <details className="faq">
+              <summary>
+                ทานนานแค่ไหนถึงเห็นผล?
+                <span className="text-red-500">▼</span>
+              </summary>
+              <div className="faq-content">
+                ทานเพียง <strong>3 วันอาการดีขึ้น</strong> ถ้าทานต่อเนื่อง 3-4 เดือน อาการจะหายไป
+              </div>
+            </details>
+
+            <details className="faq">
+              <summary>
+                มีผลข้างเคียงไหม?
+                <span className="text-red-500">▼</span>
+              </summary>
+              <div className="faq-content">
+                <strong>ไม่มีผลข้างเคียง</strong> เพราะทำจากสมุนไพรธรรมชาติ 100%
+              </div>
+            </details>
+
+            <details className="faq">
+              <summary>
+                ต่อมลูกหมากโตหายเองได้ไหม?
+                <span className="text-red-500">▼</span>
+              </summary>
+              <div className="faq-content">
+                โรคนี้<strong>ไม่หายเอง</strong> แต่สามารถรักษาได้ด้วยการดูแลสุขภาพและผลิตภัณฑ์เสริมอาหารที่เหมาะสม
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog */}
+      <section className="py-10 px-4 section-light">
         <div className="container mx-auto max-w-4xl">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold">
-              <span className="gradient-text">บทความ</span>สุขภาพ
-            </h2>
-            <Link href="/blog" className="text-red-400 text-sm hover:text-red-300">
+            <h2><span className="gradient-text">บทความ</span>สุขภาพ</h2>
+            <Link href="/blog" className="text-red-600 font-semibold">
               ดูทั้งหมด →
             </Link>
           </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { title: "10 สัญญาณเตือนโรคต่อมลูกหมากโต", slug: "10-warning-signs-prostate" },
-              { title: "ไลโคปีนคืออะไร? ทำไมช่วยได้", slug: "what-is-lycopene" },
-              { title: "อาหารบำรุงต่อมลูกหมาก", slug: "foods-for-prostate-health" },
-            ].map((article, index) => (
-              <Link
-                key={index}
-                href={`/blog/${article.slug}`}
-                className="card block hover:border-red-500 transition"
-              >
-                <div className="aspect-video bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg mb-3 flex items-center justify-center">
-                  <span className="text-3xl">📚</span>
-                </div>
-                <h3 className="font-semibold text-sm sm:text-base line-clamp-2">{article.title}</h3>
+              { title: "10 สัญญาณเตือน", slug: "10-warning-signs-prostate", emoji: "⚠️" },
+              { title: "ไลโคปีนช่วยอย่างไร", slug: "what-is-lycopene", emoji: "🍅" },
+              { title: "อาหารบำรุงต่อมลูกหมาก", slug: "foods-for-prostate-health", emoji: "🥗" },
+            ].map((a, i) => (
+              <Link key={i} href={`/blog/${a.slug}`} className="card block text-center hover:border-red-300">
+                <div className="text-5xl mb-3">{a.emoji}</div>
+                <p className="font-bold text-lg">{a.title}</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Footer - Mobile Optimized */}
-      <footer className="glass py-8 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-6">
-            <p className="text-xl font-bold gradient-text mb-2">Tomazing Plus2</p>
-            <p className="text-gray-400 text-sm">
-              ผลิตภัณฑ์จากงานวิจัยไลโคปีน ช่วยดูแลสุขภาพต่อมลูกหมาก
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 text-sm text-gray-400 mb-6">
+      {/* Footer */}
+      <footer className="py-8 px-4 border-t-2 border-gray-200">
+        <div className="container mx-auto max-w-4xl text-center">
+          <p className="text-2xl font-bold gradient-text mb-4">Tomazing Plus2</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 text-lg text-gray-600 mb-4">
             <span>📞 063-629-4452</span>
             <span>💬 LINE: @tomazingplus</span>
           </div>
-          <div className="flex justify-center gap-4 mb-6">
-            <Link href="/blog" className="text-gray-400 hover:text-white text-sm">
-              บทความ
-            </Link>
-            <a href="https://lin.ee/riWkqmk" className="text-gray-400 hover:text-white text-sm">
-              สั่งซื้อ
-            </a>
-          </div>
-          <p className="text-center text-gray-600 text-xs">
-            © 2026 Tomazing Plus2. All rights reserved.
-          </p>
+          <p className="text-gray-400">© 2026 Tomazing Plus2. All rights reserved.</p>
         </div>
       </footer>
 
       {/* Fixed Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 glass sm:hidden">
+      <div className="fixed-cta hide-desktop">
         <a
           href="https://lin.ee/riWkqmk"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary w-full text-center block animate-pulse-glow"
+          className="btn-line w-full animate-pulse-glow"
         >
           💬 สั่งซื้อ / ปรึกษาฟรี
         </a>
@@ -433,16 +456,13 @@ export default function Home() {
         href="https://lin.ee/riWkqmk"
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden sm:flex fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg items-center gap-2 transition-all hover:scale-105"
+        className="hide-mobile fixed bottom-6 right-6 z-50 btn-line shadow-xl"
       >
-        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z" />
-        </svg>
-        LINE สั่งซื้อ
+        💬 LINE สั่งซื้อ
       </a>
 
-      {/* Add padding at bottom for fixed mobile CTA */}
-      <div className="h-20 sm:hidden"></div>
+      {/* Bottom Padding for Mobile CTA */}
+      <div className="h-24 sm:h-0"></div>
     </main>
   );
 }
