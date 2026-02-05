@@ -1,12 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
 
-// รูปภาพจากเว็บอ้างอิง และ placeholder
+// รูปภาพจาก public folder (generated images)
+import { StatCard } from "@/components/landing/StatCard";
+import { SymptomCard } from "@/components/landing/SymptomCard";
+import { IngredientCard } from "@/components/landing/IngredientCard";
+import { BenefitCard } from "@/components/landing/BenefitCard";
+import { ReviewCard } from "@/components/landing/ReviewCard";
+
 const images = {
-  hero: "https://drsuntchai.com/wp-content/uploads/2025/01/treat-benign-prostatic-hyperplasia.webp",
+  hero: "/hero.png",           // ผู้ชายอายุ 60+ ยิ้มมีความสุข
+  product: "/product.png",     // ขวดผลิตภัณฑ์ TOMAZING PLUS2
+  tomatoes: "/tomatoes.png",   // มะเขือเทศสด
+  couple: "/couple.png",       // คู่รักสูงอายุมีความสุข
   prostate: "https://drsuntchai.com/wp-content/uploads/2024/12/Benign-Prostatic-Hyperplasia-02.webp",
   symptoms: "https://drsuntchai.com/wp-content/uploads/2024/12/Benign-Prostatic-Hyperplasia-04.webp",
-  doctor: "https://drsuntchai.com/wp-content/uploads/2024/12/dr-suntchai-profile.webp",
 };
 
 // อาการหลัก - ลดจำนวนเหลือ 6 ข้อ แสดงชัดเจน
@@ -91,19 +99,10 @@ export default function Home() {
           </div>
 
           {/* Stats - Large Visual */}
-          <div className="grid grid-cols-3 gap-4 px-2">
-            <div className="stat-card">
-              <div className="stat-number">3 วัน</div>
-              <div className="stat-label">เห็นผล</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">4 หมื่น</div>
-              <div className="stat-label">คนหายแล้ว</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">99%</div>
-              <div className="stat-label">ซื้อซ้ำ</div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 px-2">
+            <StatCard number="3 วัน" label="เห็นผล" />
+            <StatCard number="4 หมื่น" label="คนหายแล้ว" />
+            <StatCard number="99%" label="ซื้อซ้ำ" />
           </div>
         </div>
       </section>
@@ -115,15 +114,11 @@ export default function Home() {
             <span className="gradient-text">ต่อมลูกหมากโต</span> คืออะไร?
           </h2>
 
-          {/* Image */}
-          <div className="image-container mb-8">
-            <Image
-              src={images.prostate}
-              alt="ต่อมลูกหมากโตคืออะไร"
-              width={800}
-              height={450}
-              className="w-full h-auto"
-            />
+          {/* รูปประกอบ */}
+          <div className="flex justify-center mb-8">
+            <div className="w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-red-50 to-orange-50 rounded-full flex items-center justify-center shadow-lg border-4 border-red-100">
+              <span className="text-7xl sm:text-9xl">🩺</span>
+            </div>
           </div>
 
           <div className="card mx-2 sm:mx-0">
@@ -148,24 +143,17 @@ export default function Home() {
             ถ้ามี 2-3 ข้อขึ้นไป ควรรีบดูแลตัวเอง
           </p>
 
-          {/* Symptoms Image */}
-          <div className="image-container mb-8">
-            <Image
-              src={images.symptoms}
-              alt="อาการต่อมลูกหมากโต"
-              width={800}
-              height={450}
-              className="w-full h-auto"
-            />
+          {/* รูปประกอบอาการ */}
+          <div className="flex justify-center mb-8">
+            <div className="w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-full flex items-center justify-center shadow-lg border-4 border-yellow-100">
+              <span className="text-7xl sm:text-9xl">⚠️</span>
+            </div>
           </div>
 
           {/* Symptoms Grid - Large Icons */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {symptoms.map((s, index) => (
-              <div key={index} className="symptom-badge">
-                <span className="text-4xl">{s.icon}</span>
-                <span className="font-semibold text-base sm:text-lg">{s.text}</span>
-              </div>
+              <SymptomCard key={index} icon={s.icon} text={s.text} />
             ))}
           </div>
 
@@ -191,22 +179,24 @@ export default function Home() {
 
           {/* Product Visual */}
           <div className="flex justify-center mb-10">
-            <div className="relative w-56 h-56 sm:w-72 sm:h-72">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-              <div className="relative w-full h-full bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-red-100 animate-float">
-                <span className="text-8xl sm:text-9xl">🍅</span>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-red-100">
+                <Image
+                  src={images.product}
+                  alt="TOMAZING PLUS2 ผลิตภัณฑ์บำรุงต่อมลูกหมาก"
+                  width={300}
+                  height={300}
+                  className="w-56 h-56 sm:w-72 sm:h-72 object-cover"
+                />
               </div>
             </div>
           </div>
 
           {/* Ingredients - Visual Cards */}
-          <div className="grid grid-cols-3 gap-4 mb-8 px-2 sm:px-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 px-2 sm:px-0">
             {ingredients.map((ing, i) => (
-              <div key={i} className="card text-center py-6">
-                <div className="text-5xl sm:text-6xl mb-3">{ing.emoji}</div>
-                <p className="font-bold text-lg sm:text-xl mb-1">{ing.name}</p>
-                <p className="text-gray-500 text-sm sm:text-base">{ing.desc}</p>
-              </div>
+              <IngredientCard key={i} emoji={ing.emoji} name={ing.name} desc={ing.desc} />
             ))}
           </div>
 
@@ -223,12 +213,9 @@ export default function Home() {
             <span className="gradient-text">ประโยชน์</span>ที่ได้รับ
           </h2>
 
-          <div className="grid grid-cols-2 gap-4 px-2 sm:px-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2 sm:px-0">
             {benefits.map((b, i) => (
-              <div key={i} className="benefit-item py-4">
-                <span className="benefit-check text-lg">{b.icon}</span>
-                <span className="text-lg sm:text-xl font-semibold">{b.text}</span>
-              </div>
+              <BenefitCard key={i} text={b.text} icon={b.icon} />
             ))}
           </div>
         </div>
@@ -241,23 +228,17 @@ export default function Home() {
             เสียงจาก<span className="gradient-text">ลูกค้าจริง</span>
           </h2>
 
-          <div className="card bg-white mx-2 sm:mx-0 p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <div className="flex-shrink-0">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-5xl sm:text-6xl shadow-inner">
-                  👴
-                </div>
-              </div>
-              <div className="text-center sm:text-left">
-                <p className="text-xl sm:text-2xl leading-relaxed mb-4">
-                  &quot;ทนทานมา <strong>7 ปี</strong> พอทาน TOMAZING PLUS
-                  แค่ <span className="gradient-text font-bold">3 วัน อาการดีขึ้น!</span>
-                  เดี๋ยวนี้ไม่ต้องตื่นกลางคืนแล้ว&quot;
-                </p>
-                <p className="text-gray-500 text-lg font-semibold">— ลุงเบิร์ด อายุ 65 ปี</p>
-              </div>
-            </div>
-          </div>
+          <ReviewCard
+            name="ลุงเบิร์ด อายุ 65 ปี"
+            quote={
+              <>
+                ทนทานมา <strong>7 ปี</strong> พอทาน TOMAZING PLUS
+                แค่ <span className="gradient-text font-bold">3 วัน อาการดีขึ้น!</span>{" "}
+                เดี๋ยวนี้ไม่ต้องตื่นกลางคืนแล้ว
+              </>
+            }
+            image={images.couple}
+          />
 
           {/* Stats */}
           <div className="card mt-8 text-center bg-gradient-to-r from-red-50 to-orange-50 mx-2 sm:mx-0 py-8">

@@ -124,6 +124,7 @@ p {
   border: 2px solid var(--color-border);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  margin-bottom: 0.75rem;
 }
 
 .card:hover {
@@ -210,6 +211,14 @@ p {
   color: var(--color-accent);
 }
 
+/* Global Section Styling */
+section {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  /* Add spacing between sections */
+}
+
 /* Section Backgrounds */
 .section-light {
   background: var(--color-surface);
@@ -256,6 +265,7 @@ p {
   border-radius: 1rem;
   border: 2px solid var(--color-border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0.5rem;
 }
 
 .symptom-badge:hover {
@@ -286,6 +296,7 @@ p {
   background: var(--color-card);
   border-radius: 0.75rem;
   border: 2px solid var(--color-border);
+  margin-bottom: 0.5rem;
 }
 
 .benefit-check {
@@ -308,6 +319,7 @@ p {
   background: var(--color-card);
   border-radius: 1rem;
   border: 2px solid var(--color-border);
+  margin-bottom: 0.5rem;
 }
 
 .stat-number {
